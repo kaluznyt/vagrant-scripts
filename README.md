@@ -1,3 +1,3 @@
 # vagrant-scripts
 
-A couple of useful script for vagrant
+A couple of useful scripts for vagrant
