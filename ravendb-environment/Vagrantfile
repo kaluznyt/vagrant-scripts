@@ -17,29 +17,28 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 3389, host: 3390, auto_correct: true
   config.vm.network :forwarded_port, guest: 5985, host: 5986, id: "winrm", auto_correct: true
   
+  # Virtualbox provider specific configuration
+
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 2049
     vb.cpus = 2
     vb.gui = true
     vb.linked_clone = true
     
-    # Settings https://www.virtualbox.org/manual/ch08.html#idp47569025503568
+    # Settings overview: https://www.virtualbox.org/manual/ch08.html#idp47569025503568
+
     vb.customize ["modifyvm", :id, "--vram", "128"]
     vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
     vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
     vb.customize ["modifyvm", :id, "--audio", "none"]
   end
   
+  # Shell provisioning script running on guest
+
   config.vm.provision "shell" do |s|
     s.args = [ variable["ravendb"]["installer"] ]
     s.path = variable["ravendb"]["installer-script"]
   end
-  
-  #
-  #config.vm.provision "shell" do |s|
-  #  s.args = [ variable["master_hostname"], variable["minion_name"], variable["minion_installer_url"]]
-  #  s.path = variable["minion_provisioner_script_path"]
-  #end
   
   #######################################################################
   ###################### Per Machine Configuration ######################
@@ -47,12 +46,12 @@ Vagrant.configure("2") do |config|
     
   variable["machines"].each do |machine|
     config.vm.define machine["name"] do |item|
-        item.vm.hostname = machine["name"]
-        item.vm.network machine["network"], ip: machine["ip"]
+      item.vm.hostname = machine["name"]
+      item.vm.network machine["network"], ip: machine["ip"]
         
-        config.vm.provider "virtualbox" do |vb|
-            vb.name = machine["name"]
-        end
+      config.vm.provider "virtualbox" do |vb|
+          vb.name = machine["name"]
+      end
     end
   end
 end
