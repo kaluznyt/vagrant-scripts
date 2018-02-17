@@ -1,0 +1,19 @@
+vagrant-box: windows-2012-r2-server
+
+ravendb:
+  installer: https://daily-builds.s3.amazonaws.com/RavenDB-3.5.6-patch-35252.Setup.exe
+  installer-script: scripts/install-ravendb.ps1
+
+machines:
+  - name: raven-1
+    network: "private_network"
+    ip: 192.168.100.2
+    
+  - name: raven-2
+    network: "private_network"
+    ip: 192.168.100.3
+
+  - name: raven-2
+    network: "private_network"
+    ip: 192.168.100.4
+   
