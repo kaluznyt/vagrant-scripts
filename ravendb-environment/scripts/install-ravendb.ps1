@@ -3,8 +3,7 @@ PARAM(
     [string] $installerUrl
 )
 
-#$installerUrl = "https://daily-builds.s3.amazonaws.com/RavenDB-3.5.6-patch-35252.Setup.exe"
-$installerTempPath = "$($env:SystemRoot)\Temp\$([System.IO.Path]::GetFileName($($installerUrl)))"
+$installerTempPath = "C:\vagrant\software\$([System.IO.Path]::GetFileName($($installerUrl)))"
 
 Write-Host "Downloading Installer $installerUrl"	
 
