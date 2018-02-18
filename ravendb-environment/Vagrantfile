@@ -20,8 +20,8 @@ Vagrant.configure("2") do |config|
   # Virtualbox provider specific configuration
 
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = 2049
-    vb.cpus = 2
+    vb.memory = variable["memory"]
+    vb.cpus = variable["cpus"]
     vb.gui = true
     vb.linked_clone = true
     
@@ -35,22 +35,22 @@ Vagrant.configure("2") do |config|
   
   # Shell provisioning script running on guest
 
-  config.vm.provision "shell" do |s|
-    s.args = [ variable["ravendb"]["installer"] ]
-    s.path = variable["ravendb"]["installer-script"]
+  config.vm.provision "shell" do |script|
+    script.args = [ variable["ravendb"]["installer"] ]
+    script.path = variable["ravendb"]["installer-script"]
   end
   
   #######################################################################
   ###################### Per Machine Configuration ######################
   #######################################################################
     
-  variable["machines"].each do |machine|
-    config.vm.define machine["name"] do |item|
-      item.vm.hostname = machine["name"]
-      item.vm.network machine["network"], ip: machine["ip"]
+  variable["machines"].each do |machineConfig|
+    config.vm.define machineConfig["name"] do |machine|
+      machine.vm.hostname = machineConfig["name"]
+      machine.vm.network machineConfig["network"], ip: machineConfig["ip"]
         
       config.vm.provider "virtualbox" do |vb|
-          vb.name = machine["name"]
+          vb.name = machineConfig["name"]
       end
     end
   end

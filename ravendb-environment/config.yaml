@@ -1,4 +1,6 @@
 vagrant-box: windows-2012-r2-server
+memory: 2048
+cpus: 2
 
 ravendb:
   installer: https://daily-builds.s3.amazonaws.com/RavenDB-3.5.6-patch-35252.Setup.exe

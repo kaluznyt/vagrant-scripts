@@ -27,7 +27,8 @@ Start-Process $installerTempPath -ArgumentList "/quiet /log $installLog /msicl `
 
 $installLogContent = Get-Content $installLog -Raw
 
-if($installLogContent -match "RavenDB -- (Configuration|Installation) completed successfully"){
+if($installLogContent -match "RavenDB -- (Configuration|Installation) completed successfully")
+{
     Write-Host "Installation successful !"
 }
 else
